@@ -43,7 +43,6 @@ import java.io.IOException;
 
 public class PostAdActivity extends AppCompatActivity {
 
-    // UI Components
     private ImageView btnBack;
     private EditText etProductName, etDescription, etQuantity, etPrice, etMobileNumber;
     private Spinner spinnerAvailability, spinnerStockCondition;
@@ -54,7 +53,6 @@ public class PostAdActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseStorage storage;
 
-    // Image selection
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int READ_MEDIA_IMAGES_PERMISSION_CODE = 101;
     private static final int READ_EXTERNAL_STORAGE_PERMISSION_CODE = 102;
@@ -68,7 +66,6 @@ public class PostAdActivity extends AppCompatActivity {
     private String selectedImageExtension = "jpg";
     private Bitmap.CompressFormat selectedCompressFormat = Bitmap.CompressFormat.JPEG;
 
-    // Cloudinary upload result listener
     public interface OnUploadResultListener {
         void onSuccess(String imageUrl);
         void onFailure(String error);
@@ -102,13 +99,11 @@ public class PostAdActivity extends AppCompatActivity {
     }
 
     private void setupSpinners() {
-        // Availability Spinner
         String[] availabilityOptions = {"Available Now", "Available in 1 week", "Available in 2 weeks", "Pre-order"};
         ArrayAdapter<String> availabilityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, availabilityOptions);
         availabilityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAvailability.setAdapter(availabilityAdapter);
 
-        // Stock Condition Spinner
         String[] stockConditionOptions = {"New", "Good", "Fair", "Organic"};
         ArrayAdapter<String> stockAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, stockConditionOptions);
         stockAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -122,7 +117,6 @@ public class PostAdActivity extends AppCompatActivity {
     }
 
     private void setupImageLaunchers() {
-        // Camera launcher
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -138,7 +132,6 @@ public class PostAdActivity extends AppCompatActivity {
                 }
         );
 
-        // Gallery launcher
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -197,24 +190,19 @@ public class PostAdActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-        // Handle different Android versions for storage permissions
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            // Android 14+ (API 34+) - Handle Selected Photos Access
             handleAndroid14PlusGalleryAccess();
         } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            // Android 13 (API 33) - Use READ_MEDIA_IMAGES
             handleAndroid13GalleryAccess();
         } else {
-            // Android 12 and below - Use READ_EXTERNAL_STORAGE
             handleLegacyGalleryAccess();
         }
     }
 
     private void handleAndroid14PlusGalleryAccess() {
-        // For Android 14+, we can use partial access or full access
         String[] permissions = {
                 Manifest.permission.READ_MEDIA_IMAGES,
-                "android.permission.READ_MEDIA_VISUAL_USER_SELECTED" // Partial access permission
+                "android.permission.READ_MEDIA_VISUAL_USER_SELECTED"
         };
 
         boolean hasFullAccess = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
@@ -226,7 +214,6 @@ public class PostAdActivity extends AppCompatActivity {
         if (hasFullAccess || hasPartialAccess) {
             launchGalleryIntent();
         } else {
-            // Request both permissions, system will handle which one to grant
             ActivityCompat.requestPermissions(this, permissions, READ_MEDIA_IMAGES_PERMISSION_CODE);
         }
     }
@@ -277,7 +264,6 @@ public class PostAdActivity extends AppCompatActivity {
                 break;
 
             case READ_MEDIA_IMAGES_PERMISSION_CODE:
-                // Handle Android 13+ media permissions (including Android 14+ partial access)
                 boolean hasFullAccess = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 boolean hasPartialAccess = grantResults.length > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
@@ -293,7 +279,6 @@ public class PostAdActivity extends AppCompatActivity {
                 break;
 
             case READ_EXTERNAL_STORAGE_PERMISSION_CODE:
-                // Handle legacy storage permission (Android 12 and below)
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchGalleryIntent();
                 } else {
@@ -348,10 +333,8 @@ public class PostAdActivity extends AppCompatActivity {
             return;
         }
         if (selectedBitmap != null) {
-            // Upload image to Firebase Storage
             uploadImageAndPost(productName, description, quantity, price, mobileNumber, availability, stockCondition, currentFarmerId);
         } else {
-            // No image selected, save post with null imageUrl
             savePostToFirestore(productName, description, quantity, price, mobileNumber, availability, stockCondition, currentFarmerId, null);
         }
     }
@@ -365,11 +348,11 @@ public class PostAdActivity extends AppCompatActivity {
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("file", "image." + selectedImageExtension,
                         RequestBody.create(imageBytes, MediaType.parse(selectedImageMimeType)))
-                .addFormDataPart("upload_preset", "unsigned_preset") // Cloudinary unsigned preset
+                .addFormDataPart("upload_preset", "unsigned_preset")
                 .build();
 
         Request request = new Request.Builder()
-                .url("https://api.cloudinary.com/v1_1/drjizoz1s/image/upload") // Cloudinary cloud name
+                .url("https://api.cloudinary.com/v1_1/drjizoz1s/image/upload")
                 .post(requestBody)
                 .build();
 
@@ -413,7 +396,6 @@ public class PostAdActivity extends AppCompatActivity {
     }
 
     private void savePostToFirestore(String productName, String description, String quantity, String price, String mobileNumber, String availability, String stockCondition, String farmerId, String imageUrl) {
-        // First, get the farmer's location from their user profile
         db.collection("users")
                 .document(farmerId)
                 .get()
@@ -448,7 +430,6 @@ public class PostAdActivity extends AppCompatActivity {
                                     Toast.makeText(PostAdActivity.this, "Failed to post ad: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 });
                     } else {
-                        // Fallback if farmer profile not found
                         Map<String, Object> postData = new HashMap<>();
                         postData.put("productName", productName);
                         postData.put("description", description);
@@ -478,7 +459,6 @@ public class PostAdActivity extends AppCompatActivity {
                 });
     }
 
-    // Helper to get MIME type from URI
     private String getMimeTypeFromUri(Uri uri) {
         String mimeType = null;
         if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
@@ -491,23 +471,19 @@ public class PostAdActivity extends AppCompatActivity {
         return mimeType != null ? mimeType : "image/jpeg";
     }
 
-    // Helper to get file extension from MIME type
     private String getExtensionFromMimeType(String mimeType) {
         if (mimeType == null) return "jpg";
         if (mimeType.equals("image/png")) return "png";
         if (mimeType.equals("image/jpeg")) return "jpg";
         if (mimeType.equals("image/jpg")) return "jpg";
         if (mimeType.equals("image/webp")) return "webp";
-        // Add more as needed
         return "jpg";
     }
 
-    // Helper to get Bitmap.CompressFormat from MIME type
     private Bitmap.CompressFormat getCompressFormatFromMimeType(String mimeType) {
         if (mimeType == null) return Bitmap.CompressFormat.JPEG;
         if (mimeType.equals("image/png")) return Bitmap.CompressFormat.PNG;
         if (mimeType.equals("image/webp")) return Bitmap.CompressFormat.WEBP;
-        // Default to JPEG for jpg/jpeg and others
         return Bitmap.CompressFormat.JPEG;
     }
 }
