@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Required permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -30,7 +29,6 @@
         android:theme="@style/Theme.CoCoNet"
         tools:targetApi="31">
 
-        <!-- Launcher Activity -->
         <activity
             android:name=".GetstartActivity"
             android:exported="true">
@@ -40,7 +38,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Existing Activities -->
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".CreateAccountActivity"/>
@@ -56,12 +53,10 @@
         <activity android:name=".AllProductsActivity"/>
         <activity android:name=".LocateFarmersActivity"/>
 
-        <!-- ✅ Newly Added Activity -->
         <activity
             android:name=".MapLocationPickerActivity"
             android:label="Select Location"/>
 
-        <!-- Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAW8e-BygqUFmvGcJDFIAai08BYginwhao" />
