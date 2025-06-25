@@ -14,7 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ViewAdActivity extends AppCompatActivity {
 
-    // UI Components
     private ImageView btnBack, btnMenu;
     private ImageView ivProductImage;
     private TextView tvProductName, tvDescription, tvQuantity, tvPrice;
@@ -26,11 +25,9 @@ public class ViewAdActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
-    // Add these fields to store coordinates
     private Double farmerLatitude = null;
     private Double farmerLongitude = null;
 
-    // Add this field to store the post's location
     private String postLocation = null;
 
     @Override
@@ -57,11 +54,9 @@ public class ViewAdActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        // Header components
         btnBack = findViewById(R.id.btn_back);
         btnMenu = findViewById(R.id.btn_menu);
 
-        // Product details
         ivProductImage = findViewById(R.id.iv_product_image);
         tvProductName = findViewById(R.id.tv_product_name);
         tvDescription = findViewById(R.id.tv_description);
@@ -70,28 +65,22 @@ public class ViewAdActivity extends AppCompatActivity {
         tvAvailability = findViewById(R.id.tv_availability);
         tvStockCondition = findViewById(R.id.tv_stock_condition);
 
-        // Contact information
         tvMobile = findViewById(R.id.tv_mobile);
         tvEmail = findViewById(R.id.tv_email);
         tvLocation = findViewById(R.id.tv_location);
 
-        // Action button
         btnDone = findViewById(R.id.btn_done);
         btnLocation = findViewById(R.id.btn_location);
         btnBuyNow = findViewById(R.id.btn_buy_now);
     }
 
     private void setupClickListeners() {
-        // Back button click
         btnBack.setOnClickListener(v -> onBackPressed());
 
-        // Menu button click
         btnMenu.setOnClickListener(v -> showMenuOptions());
 
-        // Done button click
         btnDone.setOnClickListener(v -> handleDoneButton());
 
-        // Contact info click listeners
         tvMobile.setOnClickListener(v ->
                 Toast.makeText(ViewAdActivity.this, "Mobile: " + tvMobile.getText(), Toast.LENGTH_SHORT).show()
         );
@@ -115,7 +104,6 @@ public class ViewAdActivity extends AppCompatActivity {
             return;
         }
 
-        // Show loading state
         showLoadingState();
 
         db.collection("farmer_posts")
@@ -123,7 +111,6 @@ public class ViewAdActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Get basic ad data
                         String productName = documentSnapshot.getString("productName");
                         String description = documentSnapshot.getString("description");
                         String quantity = documentSnapshot.getString("quantity");
@@ -133,16 +120,13 @@ public class ViewAdActivity extends AppCompatActivity {
                         String mobileNumber = documentSnapshot.getString("mobileNumber");
                         String farmerId = documentSnapshot.getString("farmerId");
                         String imageUrl = documentSnapshot.getString("imageUrl");
-                        // Fetch latitude and longitude if available
                         if (documentSnapshot.contains("latitude")) {
                             farmerLatitude = documentSnapshot.getDouble("latitude");
                         }
                         if (documentSnapshot.contains("longitude")) {
                             farmerLongitude = documentSnapshot.getDouble("longitude");
                         }
-                        // Store the post's location
                         postLocation = documentSnapshot.getString("location");
-                        // Set basic ad data to views
                         tvProductName.setText(productName != null ? productName : "N/A");
                         tvDescription.setText(description != null ? description : "No description available");
                         tvQuantity.setText(quantity != null ? quantity : "N/A");
@@ -159,13 +143,10 @@ public class ViewAdActivity extends AppCompatActivity {
                         } else {
                             ivProductImage.setImageResource(R.drawable.img);
                         }
-                        // Now fetch farmer details using farmerId
                         if (farmerId != null && !farmerId.isEmpty()) {
                             loadFarmerDetails(farmerId);
                         } else {
-                            // Set default values if farmer ID is not available
                             tvEmail.setText("Email not available");
-                            // Use post location if available
                             if (postLocation != null && !postLocation.isEmpty()) {
                                 tvLocation.setText(postLocation);
                             } else {
@@ -186,17 +167,14 @@ public class ViewAdActivity extends AppCompatActivity {
     }
 
     private void loadFarmerDetails(String farmerId) {
-        // Fetch farmer details from users collection (or whatever collection you store user data in)
-        db.collection("users") // Change this to your actual users collection name
+        db.collection("users")
                 .document(farmerId)
                 .get()
                 .addOnSuccessListener(userSnapshot -> {
                     if (userSnapshot.exists()) {
                         String email = userSnapshot.getString("email");
                         String location = userSnapshot.getString("location");
-                        // Set farmer details to views
                         tvEmail.setText(email != null ? email : "Email not available");
-                        // Use user's location if available, else use post location
                         if (location != null && !location.isEmpty()) {
                             tvLocation.setText(location);
                         } else if (postLocation != null && !postLocation.isEmpty()) {
@@ -205,9 +183,7 @@ public class ViewAdActivity extends AppCompatActivity {
                             tvLocation.setText("Location not specified");
                         }
                     } else {
-                        // User document doesn't exist
                         tvEmail.setText("Email not available");
-                        // Use post location if available
                         if (postLocation != null && !postLocation.isEmpty()) {
                             tvLocation.setText(postLocation);
                         } else {
@@ -219,7 +195,6 @@ public class ViewAdActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to load farmer details: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     tvEmail.setText("Email not available");
-                    // Use post location if available
                     if (postLocation != null && !postLocation.isEmpty()) {
                         tvLocation.setText(postLocation);
                     } else {
@@ -230,7 +205,6 @@ public class ViewAdActivity extends AppCompatActivity {
     }
 
     private void showLoadingState() {
-        // You can implement a loading indicator here
         tvProductName.setText("Loading...");
         tvDescription.setText("Loading...");
         tvQuantity.setText("Loading...");
@@ -243,12 +217,10 @@ public class ViewAdActivity extends AppCompatActivity {
     }
 
     private void hideLoadingState() {
-        // Hide loading indicators if any
     }
 
     private void showMenuOptions() {
         Toast.makeText(this, "Menu options", Toast.LENGTH_SHORT).show();
-        // You can implement popup menu here
     }
 
     private void handleDoneButton() {
@@ -257,7 +229,6 @@ public class ViewAdActivity extends AppCompatActivity {
     }
 
     private void handleLocationButton() {
-        // Try to open Google Maps with coordinates if available, else with address
         if (farmerLatitude != null && farmerLongitude != null) {
             String uri = "geo:" + farmerLatitude + "," + farmerLongitude + "?q=" + farmerLatitude + "," + farmerLongitude + "(Farmer Location)";
             android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(uri));
