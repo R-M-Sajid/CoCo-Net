@@ -55,7 +55,6 @@ public class LocateDistributorsActivity extends AppCompatActivity implements OnM
         btnMyLocation = findViewById(R.id.btnMyLocation);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Set title for this activity
         titleText.setText("Locate Distributors");
 
         backButton.setOnClickListener(v -> onBackPressed());
@@ -75,7 +74,7 @@ public class LocateDistributorsActivity extends AppCompatActivity implements OnM
                         Address loc = addressList.get(0);
                         LatLng latLng = new LatLng(loc.getLatitude(), loc.getLongitude());
                         mMap.clear();
-                        loadDistributorLocations(); // Reload distributor markers
+                        loadDistributorLocations();
                         mMap.addMarker(new MarkerOptions().position(latLng).title("Searched Location"));
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                     } else {
@@ -119,7 +118,7 @@ public class LocateDistributorsActivity extends AppCompatActivity implements OnM
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
         LatLng sriLankaCenter = new LatLng(7.8731, 80.7718);
-        loadDistributorLocations(); // Load distributor locations from database
+        loadDistributorLocations();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sriLankaCenter, 7.5f));
 
         mMap.getUiSettings().setZoomControlsEnabled(false);
@@ -133,16 +132,13 @@ public class LocateDistributorsActivity extends AppCompatActivity implements OnM
     }
 
     private void loadDistributorLocations() {
-        // Reset distributor count
         distributorCount = 0;
 
-        // Query Firestore for all distributors
         db.collection("users")
                 .whereEqualTo("role", "Distributor")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        // Check if distributor has coordinates
                         Double latitude = document.getDouble("latitude");
                         Double longitude = document.getDouble("longitude");
                         String username = document.getString("username");
@@ -151,7 +147,6 @@ public class LocateDistributorsActivity extends AppCompatActivity implements OnM
                         if (latitude != null && longitude != null && username != null) {
                             LatLng distributorLocation = new LatLng(latitude, longitude);
 
-                            // Create marker for distributor
                             MarkerOptions markerOptions = new MarkerOptions()
                                     .position(distributorLocation)
                                     .title(username + " (Distributor)")
@@ -163,7 +158,6 @@ public class LocateDistributorsActivity extends AppCompatActivity implements OnM
                             mMap.addMarker(markerOptions);
                             distributorCount++;
 
-                            // Log for debugging
                             System.out.println("Added distributor marker: " + username + " at " + latitude + ", " + longitude);
                         }
                     }
