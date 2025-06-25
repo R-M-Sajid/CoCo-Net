@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612508889689",
+    "project_id": "coco-net",
+    "storage_bucket": "coco-net.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612508889689:android:5cbcc7b4749de874d5f748",
+        "android_client_info": {
+          "package_name": "com.s23010222.coconet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0doHh-z-9QIO7NVv6x9HxgyssqQ7yDCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

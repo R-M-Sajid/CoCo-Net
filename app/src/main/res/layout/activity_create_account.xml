@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".CreateAccountActivity">
+
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/top_background2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Create\nAccount"
+            android:textColor="#2C3A8C"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="4sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_image" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="100dp"
+            android:orientation="vertical"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_create_account">
+
+            <EditText
+                android:id="@+id/username_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Username"
+                android:background="@drawable/edit_text_background"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Email"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_background"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Password"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_background"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true" />
+
+            <Spinner
+                android:id="@+id/who_are_you_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_background"
+                android:prompt="@string/prompt_who_you_are"
+                android:spinnerMode="dropdown"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+
+            <EditText
+                android:id="@+id/mobile_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Mobile Number"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_background"
+                android:inputType="phone"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true" />
+
+            <RelativeLayout
+                android:id="@+id/city_container"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_background"
+                android:clickable="true"
+                android:focusable="true">
+
+                <EditText
+                    android:id="@+id/city_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="City"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:clickable="false" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_location" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/next_button_container"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/next_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/btn_arrow2"
+                android:clickable="true"
+                android:focusable="true"/>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

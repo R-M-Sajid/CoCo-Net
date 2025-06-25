@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Required permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CoCoNet"
+        tools:targetApi="31">
+
+        <!-- Launcher Activity -->
+        <activity
+            android:name=".GetstartActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Existing Activities -->
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".CreateAccountActivity"/>
+        <activity android:name=".OTPVerificationActivity"/>
+        <activity android:name=".FarmerDashboardActivity" />
+        <activity android:name=".LocateDistributorsActivity" />
+        <activity android:name=".NewOrdersActivity" />
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".PostAdActivity" />
+        <activity android:name=".ViewAdActivity" />
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".DistributorDashboardActivity"/>
+        <activity android:name=".AllProductsActivity"/>
+        <activity android:name=".LocateFarmersActivity"/>
+
+        <!-- ✅ Newly Added Activity -->
+        <activity
+            android:name=".MapLocationPickerActivity"
+            android:label="Select Location"/>
+
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAW8e-BygqUFmvGcJDFIAai08BYginwhao" />
+
+    </application>
+
+</manifest>

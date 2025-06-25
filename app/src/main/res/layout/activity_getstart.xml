@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/welcome_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".GetstartActivity">
+
+    <ImageView
+        android:id="@+id/top_curve"
+        android:layout_width="143dp"
+        android:layout_height="170dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/top_tight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/main_illustration"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/welcome"
+        android:contentDescription="Illustration"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@id/top_curve"
+        app:layout_constraintBottom_toTopOf="@id/explore_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="2:2" />
+
+    <TextView
+        android:id="@+id/explore_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Explore\nThe CoCo World"
+        android:textSize="22sp"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintTop_toBottomOf="@id/main_illustration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_today"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btn_today"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:text="Today"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:background="@drawable/get_start"
+        app:layout_constraintTop_toBottomOf="@id/explore_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp" />
+
+    <ImageView
+        android:id="@+id/bottom_curve"
+        android:layout_width="165dp"
+        android:layout_height="119dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/bottom_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

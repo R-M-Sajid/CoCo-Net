@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CoCo Net</string>
+    <string name="prompt_who_you_are">Who You Are</string>
+
+    <string-array name="who_you_are_array">
+        <item>Who You Are</item>
+        <item>Farmer</item>
+        <item>Distributor</item>
+    </string-array>
+</resources>
