@@ -97,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void setupLoadingOverlay() {
         loadingOverlay = new FrameLayout(this);
         loadingOverlay.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        loadingOverlay.setBackgroundColor(0x80000000); // semi-transparent black
+        loadingOverlay.setBackgroundColor(0x80000000);
         loadingOverlay.setVisibility(View.GONE);
         loadingLottie = new LottieAnimationView(this);
         FrameLayout.LayoutParams lottieParams = new FrameLayout.LayoutParams(300, 300);
