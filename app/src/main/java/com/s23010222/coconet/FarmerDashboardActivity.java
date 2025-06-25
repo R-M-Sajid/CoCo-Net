@@ -56,7 +56,7 @@ public class FarmerDashboardActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.profileImage);
         addPostLayout = findViewById(R.id.addPostLayout);
         seeAllText = findViewById(R.id.seeAllText);
-        recyclerViewPosts = findViewById(R.id.recyclerViewPosts); // Add this to your XML
+        recyclerViewPosts = findViewById(R.id.recyclerViewPosts);
 
         homeTab = findViewById(R.id.homeTab);
         locationTab = findViewById(R.id.locationTab);
@@ -149,7 +149,6 @@ public class FarmerDashboardActivity extends AppCompatActivity {
                         post.setImageUrl(document.getString("imageUrl"));
                         post.setFarmerId(document.getString("farmerId"));
 
-                        // Load coordinates if available
                         Double latitude = document.getDouble("latitude");
                         Double longitude = document.getDouble("longitude");
                         if (latitude != null && longitude != null) {
@@ -168,13 +167,11 @@ public class FarmerDashboardActivity extends AppCompatActivity {
 
     private void performSearch(String searchText) {
         Toast.makeText(this, "Searching for: " + searchText, Toast.LENGTH_SHORT).show();
-        // Implement search functionality here
     }
 
     private void openAllProductsActivity(String category, List<FarmerPost> posts) {
         Intent intent = new Intent(this, AllProductsActivity.class);
         intent.putExtra("category", category);
-        // Pass all posts to the AllProductsActivity
         intent.putParcelableArrayListExtra("all_posts", new ArrayList<>(posts));
         startActivity(intent);
     }
@@ -182,6 +179,6 @@ public class FarmerDashboardActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadFarmerPosts(); // Refresh posts when returning to dashboard
+        loadFarmerPosts();
     }
 }
